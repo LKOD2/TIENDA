@@ -1,0 +1,70 @@
+{% extends 'gestion/gestion-base.html' %}
+
+{% block content %}
+<div class="titulo-contenido"><h4>Categorias</h4></div>
+<div class="contenido">
+    
+    <div class="cont-agregar">
+        <button class="boton-crear" type="button"><a href="{% url 'agregar_categoria' %}" >Agregar</a></button>
+        <form method="GET" action="{% url 'buscar_categorias' %}">
+            <input class="buscador-contenido" type="text" name="query" placeholder="Buscar categorias" value="{{ query }}">
+            <button type="submit">Buscar</button>
+        </form>
+    </div>
+    
+    <div class="data">
+        <table>
+            <thead class="head-tabla-habitacion">
+                <tr>
+                    <th>Nombre</th>
+                    <th>Descripción</th>
+                    <th>Parent</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody class="body-tabla-habitacion" id="body-tabla-habitacion">
+                {% for categoria in categorias %}
+                <tr>
+                    <td>{{ categoria.nombre }}</td>
+                    <td>{{ categoria.descripcion }}</td>
+                    <td>{{ categoria.parent }}</td>
+                    <td class="acciones">
+                        <a href="editar/{{ categoria.id }}" class="accion editar "><i class='bx bxs-edit-alt'></i></a>
+                        <a href="eliminar/{{ categoria.id }}" class="accion borrar "><i class='bx bx-x'></i></a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        {% if messages %}
+        <div class="messages">
+            {% for message in messages %}
+                <div class="alert {{ message.tags }}">{{ message }}</div>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        <div class="barra-inferior">
+            <p id="cant-reg-habitaciones">{{ categorias | length }} Registros</p>
+            <div class="cont-num-pagina">
+                <i class='bx bxs-chevron-left'></i>
+                <p>1</p>
+                <i class='bx bxs-chevron-right'></i>
+            </div>
+        </div>
+
+    </div>
+    
+    
+</div>
+
+<Style>
+    .messages{
+        background-color: #22222232;
+        pad: 10px;
+        font-weight: bold;
+        text-align: center;
+    }
+</Style>
+{% endblock %}

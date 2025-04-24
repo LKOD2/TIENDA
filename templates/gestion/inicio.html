@@ -1,0 +1,48 @@
+{% extends 'gestion/gestion-base.html' %}
+
+{% load static %}
+
+{% block content %}
+
+<link rel="stylesheet" href="{% static 'css/gestion/inicio.css' %}">
+
+<div class="contenido">
+   
+    <main class="content">
+        
+        <section class="metrics">
+            <div class="card">📦 Productos: <strong>120</strong></div>
+            <div class="card">💰 Ventas: <strong>$15,000</strong></div>
+            <div class="card">👥 Clientes: <strong>300</strong></div>
+        </section>
+        <section class="sales">
+            <h2>Ventas Recientes</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Producto</th>
+                        <th>Cantidad</th>
+                        <th>Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Producto A</td>
+                        <td>2</td>
+                        <td>$40</td>
+                    </tr>
+                    <tr>
+                        <td>Producto B</td>
+                        <td>1</td>
+                        <td>$25</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+    </main>
+
+</div>
+
+
+
+{% endblock %}

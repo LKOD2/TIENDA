@@ -1,0 +1,132 @@
+{% extends 'gestion/gestion-base.html' %}
+
+{% block content %}
+<div class="contenido">
+    <div class="titulo-contenido"><h4>Usuarios</h4></div>
+    
+    <div class="cont-agregar">
+        {% if request.user.is_superuser %}
+        <button class="boton-crear" type="button"><a href="{% url 'agregar_usuario' %}" >Agregar</a></button>
+        {% else %}
+        <button class="boton-crear" type="button" style="background-color: gray;"><a href="#" >Agregar</a></button>
+        {% endif %}
+        <form method="GET" action="{% url 'buscar_usuarios' %}">
+            <input class="buscador-contenido" type="text" name="query" placeholder="Buscar usuarios" value="{{ query }}">
+            <button type="submit">Buscar</button>
+        </form>
+    </div>
+    
+    <div class="data">
+        <table>
+            <thead >
+                <tr>
+                    <th>Imagen</th>
+                    <th>Nombre</th>
+                    <th>Email</th>
+                    <th>Estado</th>
+                    <th>Rol</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody >
+                {% for usuario in usuarios %}
+                <tr>
+                    <td>
+                        {% if usuario.image %}
+                            <img src="{{ usuario.image.url }}" alt="{{ usuario.username }}" style="width: 50px; height: 50px;">
+                        {% else %}
+                            <p>Sin imagen</p>
+                        {% endif %}
+                    </td>
+                    <td>{{ usuario.username }}</td>
+                    <td>{{ usuario.email}}</td>
+                    {% if usuario.is_active %}
+                        <td><div class="status activo">Activo</div></td>
+                    {% else %}
+                        <td><div class="status">Desactivo</div></td>
+                    {% endif %}
+
+                    {% if usuario.is_superuser %}
+                        <td>Super usuario</td>
+                    {% elif usuario.is_staff %}
+                        <td>Admin</td>
+                    {% else %}
+                        <td>Usuario</td>
+                    {% endif %}
+
+                    {% if request.user.is_superuser %}
+                        {% if request.user.username == usuario.username %}
+                        <td>
+                            <a href="{% url 'editar_usuario' usuario.id %}" class="accion editar">
+                                <i class='bx bxs-edit-alt'></i>
+                            </a>
+                        </td>
+                        {% elif usuario.is_superuser %}
+                        <td>Super usuario</td>
+                        {% else %}
+                        <td>
+                            <form class="accion" action="{% url 'cambiar_estado_usuario' usuario.id %}" method="post">
+                                {% csrf_token %}
+                                <label class="accion seleccionar">
+                                
+                                    <input type="checkbox" name="is_active" onchange="this.form.submit();" 
+                                        {% if usuario.is_active %}checked{% endif %}>
+                                    <span></span>
+                                </label>
+                            </form>
+
+                            <a href="{% url 'editar_usuario' usuario.id %}" class="accion editar">
+                                <i class='bx bxs-edit-alt'></i>
+                            </a>
+                            <a href="{% url 'eliminar_usuarios' usuario.id %}" class="accion borrar">
+                                <i class='bx bx-x'></i>
+                            </a> 
+                        </td>
+                        {% endif %}
+                    {% else %}
+                        {% if request.user.username == usuario.username %}
+                        <td>
+                            <a href="{% url 'editar_usuario' usuario.id %}" class="accion editar">
+                                <i class='bx bxs-edit-alt'></i>
+                            </a>
+                        </td>
+                        {% else %}
+                            <td>No permitido</td>
+                        {% endif %}
+                    {% endif %}
+                    
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        {% if messages %}
+        <div class="messages">
+            {% for message in messages %}
+                <div class="alert {{ message.tags }}">{{ message }}</div>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        <div class="barra-inferior">
+            <p id="cant-reg-habitaciones">{{ usuarios | length }} Registros</p>
+            <div class="cont-num-pagina">
+                <i class='bx bxs-chevron-left'></i>
+                <p>1</p>
+                <i class='bx bxs-chevron-right'></i>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<Style>
+
+    .messages{
+        background-color: #22222232;
+        pad: 10px;
+        font-weight: bold;
+        text-align: center;
+    }
+</Style>
+{% endblock %}

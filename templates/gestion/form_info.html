@@ -1,0 +1,135 @@
+{% extends 'gestion/gestion-base.html' %}
+{% load static %}
+{% block content %}
+
+<div class="form-contenido">
+    <div class="cont-titulo-form">
+        <h2>Configuración de la Empresa</h2>
+    </div>
+    <form method="post" enctype="multipart/form-data" class="form-grid">
+        {% csrf_token %}
+        
+        <!-- Columna izquierda: Logo -->
+        <div class="form-group logo-group">
+            <label for="id_logo">Logo:</label>
+            {% if form.logo.value %}
+                <img src="{{ form.logo.value.url }}" alt="Logo actual de la empresa" class="logo-img">
+                <p class="logo-ruta">{{ form.logo.value.url }}</p>
+            {% endif %}
+            {{ form.logo }}
+        </div>
+        
+        <!-- Columna derecha: Campos de texto -->
+        <div class="form-group campos-group">
+            <div class="form-group">
+                <label for="id_nombre_empresa">Nombre de la Empresa:</label>
+                {{ form.nombre_empresa }}
+            </div>
+            <div class="form-group">
+                <label for="id_direccion">Dirección:</label>
+                {{ form.direccion }}
+            </div>
+            <div class="form-group">
+                <label for="id_telefono">Teléfono:</label>
+                {{ form.telefono }}
+            </div>
+            <div class="form-group">
+                <label for="id_email_contacto">Email de Contacto:</label>
+                {{ form.email_contacto }}
+            </div>
+            <div class="form-group">
+                <label for="id_redes_sociales">Redes Sociales:</label>
+                {{ form.redes_sociales }}
+            </div>
+            <button type="submit" class="boton-submit">Guardar Cambios</button>
+        </div>
+    </form>
+</div>
+
+<style>
+/* Contenedor principal del formulario */
+.form-contenido {
+    width: 100%;
+    background-color: white;
+    padding: 25px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Grid del formulario para dos columnas */
+.form-grid {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 20px;
+}
+
+/* Imagen del logo */
+.logo-img {
+    max-width: 150px;
+    max-height: 150px;
+    margin-bottom: 10px;
+}
+
+/* Ruta del logo */
+.logo-ruta {
+    font-size: 12px;
+    color: #555;
+    margin-bottom: 10px;
+}
+
+/* Campos de texto */
+.campos-group {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+/* Estilos generales */
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+label {
+    font-size: 14px;
+    font-weight: 500;
+    margin-bottom: 5px;
+}
+
+input[type="text"], input[type="email"], input[type="file"], select, textarea {
+    height: 38px;
+    padding: 8px 12px;
+    font-size: 14px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+}
+
+.boton-submit {
+    height: 40px;
+    border-radius: 6px;
+    border: none;
+    background-color: #28b463;
+    color: white;
+    font-weight: 600;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: opacity 0.3s, transform 0.3s;
+}
+
+.boton-submit:hover {
+    opacity: 0.9;
+    transform: scale(1.03);
+}
+
+/* Responsivo: Colocar todos los elementos en una columna en pantallas pequeñas */
+@media (max-width: 768px) {
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+    .logo-group, .campos-group {
+        width: 100%;
+    }
+}
+</style>
+
+{% endblock %}

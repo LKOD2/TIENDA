@@ -1,0 +1,102 @@
+{% extends 'base.html'%}
+
+{% block title %}Home{% endblock %}
+
+{% load static %}
+
+{% block content %}
+
+<div class="carousel">
+    <div class="carousel-track">
+        <img src="{% static 'images/banner.png' %}" alt="Imagen 1" class="carousel-item">
+        <img src="{% static 'images/banner1.png' %}" alt="Imagen 2" class="carousel-item">
+        <img src="{% static 'images/banner2.png' %}" alt="Imagen 3" class="carousel-item">
+    </div>
+    <button class="carousel-btn left" onclick="moveSlide(-1)">&#10094;</button>
+    <button class="carousel-btn right" onclick="moveSlide(1)">&#10095;</button>
+</div>
+
+
+<h2 class="titulo-section">Productos</h2>
+
+{% include "productos-grid.html" %}
+
+<script src="{% static 'js/base.js'%}"></script>
+<style>
+    /* Estilos generales del carrusel */
+    .carousel {
+        position: relative;
+        width: 100%;
+        overflow: hidden;
+
+        height: auto;
+    }
+
+    .carousel-track {
+        display: flex;
+        transition: transform 0.5s ease;
+        width: 100%;
+    }
+
+    .carousel-item {
+        min-width: 100%;
+        height: 100%;
+        object-fit: cover;
+        /* Asegura que las imágenes mantengan su aspecto */
+    }
+
+    /* Estilos de los botones */
+    .carousel-btn {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        background-color: rgba(0, 0, 0, 0.5);
+        color: white;
+        border: none;
+        padding: 10px;
+        cursor: pointer;
+        font-size: 24px;
+        transition: background-color 0.3s;
+    }
+
+    .carousel-btn:hover {
+        background-color: rgba(0, 0, 0, 0.7);
+    }
+
+    .carousel-btn.left {
+        left: 10px;
+    }
+
+    .carousel-btn.right {
+        right: 10px;
+    }
+
+    /* ---------------------------------------- */
+    .banner {
+        margin-bottom: 20px;
+        display: flex;
+        position: relative;
+        background-color: orangered;
+        width: 100%;
+        height: 60vh;
+        overflow: hidden;
+    }
+
+    .banner img {
+        object-fit: cover;
+        width: 100%;
+        height: 100%;
+        transition: scale .5s;
+    }
+
+    .banner img:hover {
+        scale: 1.01;
+
+    }
+
+    .titulo-section {
+        margin: 20px 0;
+    }
+</style>
+
+{% endblock %}

@@ -1,0 +1,51 @@
+{% extends 'base.html'%}
+
+{% block title %}Resumen de compra{% endblock %}
+
+{% load static %}
+
+{% block content %}
+
+
+    <link rel="stylesheet" href="{% static 'app_ventas/ventas_page/css/resumen.css' %}">
+
+    <div class="checkout-container">
+        <div class="step" id="step1">
+            <h2>🛒 Resumen de Compra</h2>
+            <ul>
+                <li>Producto A - $40</li>
+                <li>Producto B - $25</li>
+            </ul>
+            <p><strong>Total: $65</strong></p>
+            <button onclick="nextStep(2)">Continuar</button>
+        </div>
+        
+        <div class="step" id="step2" style="display: none;">
+            <h2>📦 Datos de Envío y Pago</h2>
+            <form>
+                <label>Dirección de envío:</label>
+                <input type="text" required>
+                <label>Método de pago:</label>
+                <select>
+                    <option>Tarjeta de crédito</option>
+                    <option>PayPal</option>
+                    <option>Transferencia bancaria</option>
+                </select>
+                <button type="button" onclick="nextStep(3)">Confirmar Pago</button>
+            </form>
+        </div>
+        
+        <div class="step" id="step3" style="display: none;">
+            <h2>✅ Compra Confirmada</h2>
+            <p>Gracias por tu compra. Recibirás un correo con los detalles.</p>
+            <button onclick="window.location.href='index.html'">Volver a la tienda</button>
+        </div>
+    </div>
+    
+    <script>
+        function nextStep(step) {
+            document.querySelectorAll('.step').forEach(el => el.style.display = 'none');
+            document.getElementById(`step${step}`).style.display = 'block';
+        }
+    </script>
+{% endblock %}

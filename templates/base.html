@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}titulo{% endblock %}</title>
+
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+</head>
+
+<body>
+
+    <header>
+        <div class="marca">
+            {% if configuracion.logo %}
+            <img src="{{ configuracion.logo.url }}" alt="no image">
+            {% else %}
+            <img src="{% static 'images/logo.png' %}" alt="no image">
+            {% endif %}
+        </div>
+
+        <nav class="menu-nav">
+            <a href="{% url 'home' %}">Home</a>
+            {% for categoria in categorias %}
+            <a href="{% url 'productos_por_categoria' categoria.nombre %}">{{ categoria.nombre }}</a>
+            {% endfor %}
+        </nav>
+
+        <div class="botones">
+            <div class="cont-user">
+                {% if request.user.is_authenticated %}
+                    <label for="menu-user" class="nombre-user">
+                        {{ request.user.username }}
+                    </label>
+                    <form action="{% url 'logout' %}" method="post">
+                        {% csrf_token %}
+                        <select class="menu-user" name="menu-user" id="menu-user" onchange="this.form.submit()">
+                            {% if request.user.is_authenticated %}
+                            <option value="perfil" selected disabled>{{ request.user.username }}</option>
+                            {% endif %}
+                            <option value="logout">Cerrar Sesión</option>
+                        </select>
+                    </form>
+                    {% if request.user.image %}
+                    <div class="icono-user">{{ request.user.image }}</div>
+                    {% else %}
+                    <div class="icono-user"><i class='bx bxs-user'></i></div>
+                    {% endif %}
+                {% else %}
+                <label for="menu-user" class="nombre-user"><a href="{% url 'login' %}">Iniciar sesión</a></label>
+                {% endif %}
+                
+            </div>
+            <div class="carrito-boton">
+                <i class='bx bx-cart'></i>
+            </div>
+            <div class="menu-boton" onclick="toggleMenu()">
+                <i class='bx bx-menu'></i>
+            </div>
+        </div>
+    </header>
+
+    <div class="side-menu" id="sideMenu">
+        <nav>
+            <a href="{% url 'home' %}">Home</a>
+            {% for categoria in categorias %}
+            <a href="{% url 'productos_por_categoria' categoria.nombre %}">{{ categoria.nombre }}</a>
+            {% endfor %}
+        </nav>
+    </div>
+
+
+    {% include "carrito/carrito.html" %}
+
+    <main class="contenido">
+        {% block content %}
+
+        {% endblock %}
+    </main>
+
+    <footer>
+        <div class="info">
+            <div class="footer-logo">
+                {% if configuracion.logo%}
+                <img src="{{ configuracion.logo.url }}" alt="no image">
+                {% else %}
+                <img src="{% static 'images/logo.png'%}" alt="no image">
+                {% endif %}
+            </div>
+            <div class="contacto">
+
+                <div class="cont"><i class='bx bx-phone'></i>
+                    <p>{{configuracion.telefono}}</p>
+                </div>
+                <div class="cont"><i class='bx bx-envelope'></i>
+                    <p>{{configuracion.email_contacto}}</p>
+                </div>
+                <div class="cont"><i class='bx bx-map'></i>
+                    <p>{{configuracion.direccion}}</p>
+                </div>
+
+            </div>
+
+        </div>
+        <div class="enlaces">
+            <h4 class="enlaces-titulo">Enlaces</h4>
+            <ul>
+                <li><a href="#">Productos</a></li>
+                <li><a href="#">Envios</a></li>
+                <li><a href="#">Quienes somos</a></li>
+                <li><a href="{% url 'gestion' %}">Gestion</a></li>
+            </ul>
+        </div>
+        <div class="redes">
+            <h4>Redes sociales</h4>
+            <div class="redes-icono">
+                <a href=""><i class='bx bxl-facebook-square'></i></a>
+                <a href=""><i class='bx bxl-instagram'></i></a>
+                <a href=""><i class='bx bxl-instagram'></i></a>
+            </div>
+        </div>
+
+    </footer>
+    
+    <script src="{% static 'js/carrito/carrito_ver.js'%}"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Habitaciones</title>
+    
+    <link rel="stylesheet" href="{% static 'css/gestion_base.css' %}">
+    <link rel="stylesheet" href="{% static 'css/gestion/inicio.css' %}">
+
+    <script src="https://unpkg.com/boxicons@2.1.4/dist/boxicons.js"></script>
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    
+    <!-- google fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+
+
+</head>
+<body>
+
+    <div class="gral">
+
+        <!-- ---------------------- header -------------------------- -->
+
+        <div class="header">
+            <!-- <div class="cont-busqueda">
+                <form action="#">
+                    <input type="search" placeholder="Buscar">
+                </form>
+            </div> -->
+            <h2>Bienvenido</h2>
+
+            <div class="cont-user">
+                {% if request.user.is_authenticated %}
+                    <label for="menu-user" class="nombre-user">
+                        {{ request.user.username }}
+                    </label>
+                {% else %}
+                    <label for="menu-user" class="nombre-user">Invitado</label>
+                {% endif %}
+                
+                <form action="{% url 'logout' %}" method="post" >
+                    {% csrf_token %}
+                    <select class="menu-user" name="menu-user" id="menu-user" onchange="this.form.submit()">
+                        {% if request.user.is_authenticated %}
+                        <option value="perfil" selected disabled>{{ request.user.username }}</option>
+                        {% endif %}
+                        <option value="logout">Cerrar Sesión</option>
+                    </select>
+                </form>
+                {% if request.user.is_authenticated %}
+                    <div class="icono-user">
+                        {{ request.user.image }}
+                    </div>
+                {% else %}
+                    <div class="icono-user"><i class='bx bxs-user'></i></div>
+                {% endif %}
+            
+            </div>
+            
+
+        </div>
+
+        <!-- ---------------------- menu -------------------------- -->
+
+        <div class="menu">
+
+            <div class="contenido-menu">
+            
+                <div class="cont-logo">
+                    {% if configuracion %}
+                        <img class="logo" src="{{ configuracion.logo.url }}" alt="Logo" width="50px" height="50px">
+                        <h2 id="nombre-hotel">{{ configuracion.nombre_empresa }}</h2>
+                    {% else %}
+                        <h2 id="nombre-hotel">Tienda</h2>
+                    {% endif %}
+                </div>
+                
+                <div class="cont-lista">
+                    <ul>
+                        <li class="menu-item" id="menu-item-inicio">
+                            <span class="linea"></span>
+                            <a href="{% url 'gestion' %}">
+                                <div class="item" id="item-inicio">
+                                    <i class='bx bx-home-alt-2'></i>
+                                    <p>Inicio</p>
+                                </div>  
+                            </a>                         
+                        </li>
+                        <li class="menu-item" id="menu-item-huespedes">
+                            <span class="linea"></span>
+                            <a href="{% url 'lista_productos' %}">
+                                <div class="item" id="item-huespedes">
+                                    <i class='bx bx-briefcase-alt'></i>
+                                    <p>Publicaciones</p>
+                                </div>
+                            </a>
+                        </li>
+
+                        <li class="menu-item" id="menu-item-huespedes">
+                            <span class="linea"></span>
+                            <a href="{% url 'lista_productos' %}">
+                                <div class="item" id="item-huespedes">
+                                    <i class='bx bx-briefcase-alt'></i>
+                                    <p>Ventas</p>
+                                </div>
+                            </a>
+                        </li>
+                        <li class="menu-item" id="menu-item-huespedes">
+                            <span class="linea"></span>
+                            <a href="{% url 'lista_productos' %}">
+                                <div class="item" id="item-huespedes">
+                                    <i class='bx bx-cart-add' ></i>
+                                    <p>Compras</p>
+                                </div>
+                            </a>
+                        </li>
+                        <li class="menu-item" id="menu-item-huespedes">
+                            <span class="linea"></span>
+                            <a href="{% url 'lista_productos' %}">
+                                <div class="item" id="item-huespedes">
+                                    <i class='bx bx-package'></i>
+                                    <p>Proveedores</p>
+                                </div>
+                            </a>
+                        </li>
+                        <li class="menu-item" id="menu-item-huespedes">
+                            <span class="linea"></span>
+                            <a href="{% url 'lista_productos' %}">
+                                <div class="item" id="item-huespedes">
+                                    <i class='bx bx-group'></i>
+                                    <p>Clientes</p>
+                                </div>
+                            </a>
+                        </li>
+
+                        <!-- se escondio ventas para futura implementacion -->
+                        <li class="menu-item" id="menu-item-ventas" style="display: none;">
+                            <div class="item" id="item-ventas">
+                                <i class='bx bxs-cart'></i>
+                                <p>Ventas</p>
+                                <i id="flecha-item-ventas" class='bx bxs-chevron-right flecha-item'></i>
+                            </div>
+
+                            <ul class="submenu" id="submenu-ventas">
+                                <li class="submenu-item" id="item-vender">
+                                    <p>Vender</p>
+                                </li>
+                                <li class="submenu-item" id="item-productos">
+                                    <p>Productos</p>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="menu-item">
+                            <span class="linea"></span>
+                            <a href="{% url 'categorias' %}">
+                                <div class="item">
+                                    <i class='bx bx-category' ></i>
+                                    <p>Categorias</p>
+                                </div>
+                            </a>
+                        </li>
+                        <li class="menu-item" id="menu-item-usuarios">
+                            <span class="linea"></span>
+                            <a href="{% url 'usuarios' %}">
+                                <div class="item" id="item-usuarios">
+                                    <i class='bx bx-user' ></i>
+                                    <p>Usuarios</p>
+                                </div>
+                            </a>
+                        </li>
+                        <li class="menu-item" id="menu-item-config">
+                            <span class="linea"></span>
+                            <div class="item" id="item-config">
+                                <i class='bx bx-cog'></i>
+                                <p>Configuración</p>
+                                <i id="flecha-item-config" class='bx bxs-chevron-right flecha-item'></i>
+                            </div>
+
+                            <ul class="submenu" id="submenu-general">
+                                <li class="submenu-item">
+                                    <a href="{% url 'configuracion' %}">
+                                        <p>General</p>
+                                    </a>
+                                </li>
+                                
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="cont-flecha-menu-cerrar">
+                    <i id="boton-menu-cerrar" class='bx bxs-chevron-left'></i>
+                </div>
+                
+            </div>
+
+            <div class="cont-flecha-menu-abrir" id="boton-menu-abrir">
+                <i class='bx bxs-chevron-right'></i>
+            </div>
+        </div>
+
+        <!-- --------------------------- main ----------------------------- -->
+
+        <div class="main" id="main">
+
+            {% block content %}
+
+            {% endblock %}
+            
+        </div>
+        
+    </div>
+    <script src="{% static 'js/gestion/gestion_base.js'%}"></script>
+
+</body>
+</html>

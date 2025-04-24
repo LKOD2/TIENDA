@@ -1,0 +1,54 @@
+
+
+.checkout-container {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    height: 300px;
+    text-align: center;
+}
+
+.checkout-container .step {
+    display: block;
+}
+
+.checkout-container .step h2 {
+    color: #333;
+}
+
+.checkout-container ul {
+    list-style: none;
+    padding: 0;
+}
+
+.checkout-container ul li {
+    background: #f1f1f1;
+    margin: 5px 0;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.checkout-container button {
+    background: #28a745;
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+    width: 100%;
+}
+
+.checkout-container button:hover {
+    background: #218838;
+}
+
+.checkout-container input, select {
+    width: 100%;
+    padding: 8px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}

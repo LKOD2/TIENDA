@@ -1,0 +1,149 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}{{ producto.nombre }}{% endblock %}
+
+{% block content %}
+<style>
+    .producto-detalle {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+        gap: 20px;
+        background-color: white;
+        padding: 40px 20px;
+        border-radius: 10px;
+        box-shadow: 0 0 12px 0 #d1d1d1;
+        margin-bottom: 20px;
+    }
+    .producto-img {
+        width: auto;
+        height: auto;
+        max-width: 500px;
+        max-height: 500px;
+    }
+    .producto-img img {
+        width: 100%;
+        border-radius: 10px;
+        object-fit: cover;
+        max-height: 500px;
+        box-shadow: 0 0 12px 0 #d1d1d1;
+        transition: scale 0.5s;
+    }
+    .producto-img img:hover {
+        scale: 1.02;
+    }
+    .producto-info {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+    .producto-info h2 {
+        font-size: 28px;
+        font-weight: bold;
+    }
+    .producto-precio {
+        font-size: 24px;
+        color: #222;
+        font-weight: bold;
+    }
+    .producto-descripcion {
+        font-size: 16px;
+        color: #555;
+    }
+    .boton-agregar {
+        background-color: var(--color-resaltado);
+        color: white;
+        width: fit-content;
+        font-weight: bold;
+        padding: 10px;
+        border: none;
+        border-radius: 10px;
+        cursor: pointer;
+        text-align: center;
+    }
+    .boton-agregar:hover {
+        opacity: 0.9;
+    }
+    .grupo {
+        display: flex;
+        gap: 20px;
+        align-items: center;
+    }
+    .producto-descuento {
+        background-color: red;
+        padding: 5px;
+        border-radius: 10px;
+        color: white;
+        font-weight: bold;
+    }
+    .controles-group {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+    .cantidad {
+        font-weight: bold;
+        font-size: 18px;
+    }
+    .producto-form{
+        display: flex;
+        flex-direction: column;
+        
+        gap: 10px;
+    }
+
+    /* ----- BOTONES AGREGAR ----- */
+
+    .controles-group{
+        border: 2px solid gray;
+        width: fit-content;
+        border-radius: 50px;
+        overflow: hidden;
+        padding: 5px;
+    }
+
+    .boton-cantidad{
+        border: none;
+        border-radius: 50px;
+        cursor: pointer;
+        padding: 5px;
+    }
+    .boton-cantidad:hover{
+        background-color: #555;
+        color: white;
+    }
+</style>
+
+
+<div class="producto-detalle">
+    <div class="producto-img">
+        <img class="img-producto" src="{{ producto.imagen.url }}" alt="{{ producto.nombre }}">
+    </div>
+    <div class="producto-info">
+        <h2>{{ producto.nombre }}</h2>
+        <p class="producto-descripcion">{{ producto.descripcion }}</p>
+        <div class="grupo">
+            <p class="producto-precio">${{ producto.precio }}</p>
+            {% if producto.descuento %}
+            <p class="producto-descuento">{{producto.descuento}} %</p>
+            {% endif %}
+        </div>
+
+        <form class="producto-form" id="producto-form" action="{% url 'agregar_al_carrito' producto.id %}">
+            {% csrf_token %}
+            <div class="controles-group">
+                <button id="prod-btn-restar" type="button" class="boton-cantidad">-</button>
+                <span id="prod-cantidad" class="cantidad" prod-id="{producto.id}">1</span>
+                <button id="prod-btn-sumar" type="button" class="boton-cantidad">+</button>
+            </div>
+            <button class="boton-agregar" type="submit">Agregar al carrito</button>
+        </form>
+        <div id="mensaje"></div>
+    </div>
+</div>
+
+
+<script src="{% static 'js/carrito/carrito_agregar.js'%}"></script>
+
+{% endblock %}

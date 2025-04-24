@@ -1,0 +1,42 @@
+{% load static%}
+{% if carrito_items %}
+<div class="carr-productos">
+    {% for item in carrito_items %}
+    <div class="carr-producto">
+        <img src="{{ item.producto.imagen.url }}" alt="Producto">
+        <div class="info-producto">
+            <h4>{{ item.producto.nombre }}</h4>
+            <p>{{ item.producto.descripcion }}</p>
+            <span class="carr-precio">${{ item.producto.precio }}</span>
+            <span class="carr-descuento">Descuento: {{ item.producto.descuento }} %</span>
+        </div>
+        <div class="controles">
+            <!-- <div class="total-item">${{ total_item }}</div> -->
+            <div class="controles-group">
+                <input type="hidden" id="csrf-token" value="{{ csrf_token }}">
+                <button class="carr boton-cantidad" action="restar">-</button>
+                <span id="carr-cantidad" class="cantidad" carr-prod-id="{{ item.producto.id }}">{{ item.cantidad }}</span>
+                <button class="carr boton-cantidad" action="sumar">+</button>
+            </div>
+            <button class="carr-boton-eliminar" carr-prod-id="{{ item.producto.id }}">Eliminar</button>
+        </div>
+       
+    </div>
+    {% endfor %}
+</div>
+
+<div class="subtotal">
+    <span>Subtotal:</span>
+    <span class="monto">${{ total }}</span>
+</div>
+
+<a class="boton-pagar" href="{% url 'ver_resumen' %}">Ir a Pagar</a>
+
+{% else %}
+
+<div class="carr-vacio">
+    <i class="bi bi-cart"></i>
+    <h3>Tu carrito esta vacio</h3>
+</div>
+
+{% endif %}
