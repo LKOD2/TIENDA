@@ -7,45 +7,74 @@
 {% block content %}
 
 
-    <link rel="stylesheet" href="{% static 'app_ventas/ventas_page/css/resumen.css' %}">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resumen de compra</title>
 
-    <div class="checkout-container">
-        <div class="step" id="step1">
-            <h2>🛒 Resumen de Compra</h2>
-            <ul>
-                <li>Producto A - $40</li>
-                <li>Producto B - $25</li>
-            </ul>
-            <p><strong>Total: $65</strong></p>
-            <button onclick="nextStep(2)">Continuar</button>
+    <link rel="stylesheet" href="/TIENDA/static/app_ventas/ventas_page/css/resumen.css">
+
+    <link rel="stylesheet" href="{% static 'app_ventas/ventas_page/css/resumen.css' %}">
+</head>
+<body>
+
+    <div class="resumen">
+        <div class="res-productos">
+            <h2>Productos</h2>
+            
+            <div class="res-cont-gral">
+
+                <div class="res-cont-producto">
+
+                    <div class="res-product-group">
+                        <div class="res-cont-img">
+                            <img src="" alt="Producto">
+                        </div>
+                        <h3>Televisor 100 puldgadas</h3>
+                    </div>
+                    <div class="res-product-group">
+                        <div class="precio">$10.000</div>
+                        <div class="res-prod-cont-btns">
+                            <button class="res-btn-eliminar">Eliminar</button>
+                            <div class="res-cont-cantidad">
+                                <button class="res-prod-cont-btn">-</button>
+                                <div class="res-prod-cont-cant">1</div>
+                                <button class="res-prod-cont-btn">+</button>
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div> 
+            </div>
         </div>
-        
-        <div class="step" id="step2" style="display: none;">
-            <h2>📦 Datos de Envío y Pago</h2>
-            <form>
-                <label>Dirección de envío:</label>
-                <input type="text" required>
-                <label>Método de pago:</label>
-                <select>
-                    <option>Tarjeta de crédito</option>
-                    <option>PayPal</option>
-                    <option>Transferencia bancaria</option>
-                </select>
-                <button type="button" onclick="nextStep(3)">Confirmar Pago</button>
-            </form>
-        </div>
-        
-        <div class="step" id="step3" style="display: none;">
-            <h2>✅ Compra Confirmada</h2>
-            <p>Gracias por tu compra. Recibirás un correo con los detalles.</p>
-            <button onclick="window.location.href='index.html'">Volver a la tienda</button>
+
+        <div class="res-compra">
+            <h2>Resumen de compra</h2>
+
+            <div class="resumen-cont-compra-group">
+                <div class="resumen-cont-compra-group-item">
+                    <h3>Subtotal</h3>
+                    <p>$10.000</p>
+                </div>
+                <div class="resumen-cont-compra-group-item">
+                    <h3>Envío</h3>
+                    <p>$2.000</p>
+                </div>
+                <div class="resumen-cont-compra-group-item">
+                    <h3>Total</h3>
+                    <p>$12.000</p>
+                </div>
+                <button class="res-btn-comprar">Continuar compra</button>
+            </div>
         </div>
     </div>
     
-    <script>
-        function nextStep(step) {
-            document.querySelectorAll('.step').forEach(el => el.style.display = 'none');
-            document.getElementById(`step${step}`).style.display = 'block';
-        }
-    </script>
+</body>
+</html>
+
+
+
+  
 {% endblock %}

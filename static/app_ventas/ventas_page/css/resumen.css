@@ -1,54 +1,99 @@
+.resumen {
+    display: grid;
+    grid-template-columns: 1fr 300px; /* Cambié 20% a un ancho fijo de 300px para que sea más estable */
+    gap: 20px;
+    padding: 20px 100px;
+    font-family: 'Arial', sans-serif;
+    font-weight: 400;
+}
 
+.resumen h2 {
+    margin: 0;
+    font-size: 20px;
+    font-weight: bold;
+    border-bottom: 1px solid #ccc;
+}
 
-.checkout-container {
-    background: white;
+.res-productos, .res-compra {
+    background-color: white;
     padding: 20px;
     border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    width: 100%;
-    height: 300px;
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.664);
+}
+
+.res-cont-gral {
+    margin-top: 20px;
+}
+
+.res-cont-producto {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid #ccc;
+}
+
+.res-product-group {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    align-items: center;
+    gap: 10px;
+}
+
+.res-cont-img {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.res-cont-img img {
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+}
+
+.precio {
+    font-weight: bold;
+}
+
+.res-prod-cont-btns {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+}
+.res-cont-cantidad {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.res-prod-cont-btn {
+    width: 30px;
+    height: 30px;
+    border: none;
+    background-color: #ccc;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.res-prod-cont-cant {
+    min-width: 20px;
     text-align: center;
 }
 
-.checkout-container .step {
-    display: block;
+/* COMPRA */
+.resumen-cont-compra-group {
+    margin-top: 20px;
 }
 
-.checkout-container .step h2 {
-    color: #333;
+.resumen-cont-compra-group-item {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
 }
 
-.checkout-container ul {
-    list-style: none;
-    padding: 0;
-}
-
-.checkout-container ul li {
-    background: #f1f1f1;
-    margin: 5px 0;
-    padding: 10px;
-    border-radius: 5px;
-}
-
-.checkout-container button {
-    background: #28a745;
-    color: white;
-    border: none;
-    padding: 10px;
-    border-radius: 5px;
-    cursor: pointer;
-    margin-top: 10px;
-    width: 100%;
-}
-
-.checkout-container button:hover {
-    background: #218838;
-}
-
-.checkout-container input, select {
-    width: 100%;
-    padding: 8px;
-    margin: 10px 0;
-    border: 1px solid #ccc;
-    border-radius: 5px;
+.resumen-cont-compra-group-item h3, 
+.resumen-cont-compra-group-item p {
+    margin: 0;
 }
